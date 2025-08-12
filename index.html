@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<title>Sunucu Durumu</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #eee;
+    text-align: center;
+    padding: 50px;
+  }
+  #onlinePlayers {
+    font-size: 4em;
+    color: #ffcc00;
+  }
+  a {
+    color: #00ffcc;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .btn-group a {
+    margin: 20px;
+    display: inline-block;
+    padding: 15px 25px;
+    background: #00cc99;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,204,153,0.5);
+    transition: background 0.3s ease;
+  }
+  .btn-group a:hover {
+    background: #00ffcc;
+  }
+</style>
+</head>
+<body>
+  <h1>Sunucumuza Hoşgeldin!</h1>
+  <p>Sunucu IP: <strong>forgecraft-srv.aternos.me</strong></p>
+  <p>Şu anda <span id="onlinePlayers">...</span> oyuncu çevrimiçi.</p>
+
+  <div class="btn-group">
+    <a href="https://deniz.github.io/forgecraft-vips" target="_blank" rel="noopener">VIP Satın Al</a>
+    <a href="https://deniz.github.io/forgecraft-forum" target="_blank" rel="noopener">Forum</a>
+  </div>
+
+  <script>
+    async function fetchOnlinePlayers() {
+      try {
+        const res = await fetch('https://api.mcsrvstat.us/2/forgecraft-srv.aternos.me');
+        const data = await res.json();
+        if(data.online){
+          document.getElementById('onlinePlayers').textContent = data.players.online;
+        } else {
+          document.getElementById('onlinePlayers').textContent = 'Sunucu kapalı';
+        }
+      } catch(err) {
+        document.getElementById('onlinePlayers').textContent = 'Hata oluştu';
+        console.error(err);
+      }
+    }
+    fetchOnlinePlayers();
+    setInterval(fetchOnlinePlayers, 10000);
+  </script>
+</body>
+</html>
