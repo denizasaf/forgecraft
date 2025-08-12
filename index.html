@@ -1,69 +1,328 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<title>Sunucu Durumu</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Forgecraft — Sunucu Durumu</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #eee;
-    text-align: center;
-    padding: 50px;
+  :root{
+    --bg1:#0f1724;
+    --bg2:#071028;
+    --accent:#7afcff;
+    --accent2:#ffd166;
+    --card:#0d1220;
+    --muted:#94a3b8;
+    --glass: rgba(255,255,255,0.03);
   }
-  #onlinePlayers {
-    font-size: 4em;
-    color: #ffcc00;
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background: radial-gradient(1200px 800px at 10% 10%, rgba(122,252,255,0.03), transparent 6%),
+                radial-gradient(900px 600px at 90% 90%, rgba(255,209,102,0.02), transparent 8%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:#e6eef8;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
   }
-  a {
-    color: #00ffcc;
-    text-decoration: none;
-    font-weight: bold;
+
+  /* NAV */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 36px;
+    backdrop-filter: blur(6px);
   }
-  a:hover {
-    text-decoration: underline;
+  .brand{
+    display:flex;gap:14px;align-items:center;
   }
-  .btn-group a {
-    margin: 20px;
-    display: inline-block;
-    padding: 15px 25px;
-    background: #00cc99;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0,204,153,0.5);
-    transition: background 0.3s ease;
+  .logo{
+    width:48px;height:48px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:#021226;font-size:18px;box-shadow:0 6px 18px rgba(0,0,0,0.6);
   }
-  .btn-group a:hover {
-    background: #00ffcc;
+  .brand h1{margin:0;font-size:18px;letter-spacing:0.4px}
+  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+  nav a:hover{color:var(--accent)}
+
+  /* HERO */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:40px;
+    align-items:center;
+    padding:40px 6vw;
+  }
+  .hero-left{max-width:780px}
+  .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--accent);font-weight:700;font-size:12px;margin-bottom:16px}
+  .title{font-size:48px;line-height:1.02;margin:6px 0 16px}
+  .lead{color:var(--muted);font-size:16px;margin-bottom:22px}
+  .cta-row{display:flex;gap:14px;margin-top:12px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;
+    background:linear-gradient(90deg,#0ea5a7,#7afcff);color:#021226;font-weight:800;border:none;cursor:pointer;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5), inset 0 -2px 0 rgba(0,0,0,0.06);
+    text-decoration:none;
+  }
+  .btn.secondary{
+    background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:700;
+  }
+  .tiny{font-size:13px;padding:8px 12px;border-radius:10px}
+
+  /* RIGHT CARD */
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px;padding:18px;box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .server-title{display:flex;align-items:center;gap:12px}
+  .ping-dot{width:12px;height:12px;border-radius:50%;}
+  .server-ip{color:var(--muted);font-weight:600;margin-top:6px}
+  .status-big{font-size:54px;font-weight:900;margin:10px 0;color:var(--accent2);text-shadow:0 6px 20px rgba(0,0,0,0.6)}
+  .status-sub{color:var(--muted);font-weight:600}
+  .meta-row{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .pill{background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:700;font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+
+  /* CARDS SECTION */
+  .features {padding:36px 6vw;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .feature{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .feature:hover{transform:translateY(-8px);box-shadow:0 18px 45px rgba(0,0,0,0.5)}
+
+  .feature h3{margin:0 0 8px;font-size:18px}
+  .feature p{margin:0;color:var(--muted);font-size:14px}
+
+  /* FOOTER */
+  footer{padding:28px 6vw;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
+  .small{font-size:12px;color:rgba(230,238,248,0.6)}
+
+  /* Responsive */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;gap:20px;padding:28px 4vw}
+    .title{font-size:34px}
+    .status-big{font-size:46px}
+  }
+  @media (max-width:520px){
+    header{padding:14px 18px}
+    .title{font-size:28px}
+    .server-title{flex-direction:column;align-items:flex-start}
+    nav a{display:none}
+  }
+
+  /* subtle pulse for online when online */
+  .onlinePulse{
+    animation: pulse 2s infinite;
+    box-shadow:0 0 28px rgba(255,209,102,0.08), inset 0 -4px 12px rgba(255,209,102,0.02);
+  }
+  @keyframes pulse {
+    0%{transform:scale(1)}
+    50%{transform:scale(1.02)}
+    100%{transform:scale(1)}
   }
 </style>
 </head>
 <body>
-  <h1>Sunucumuza Hoşgeldin!</h1>
-  <p>Sunucu IP: <strong>forgecraft-srv.aternos.me</strong></p>
-  <p>Şu anda <span id="onlinePlayers">...</span> oyuncu çevrimiçi.</p>
 
-  <div class="btn-group">
-    <a href="https://deniz.github.io/forgecraft-vips" target="_blank" rel="noopener">VIP Satın Al</a>
-    <a href="https://deniz.github.io/forgecraft-forum" target="_blank" rel="noopener">Forum</a>
+<header>
+  <div class="brand">
+    <div class="logo">FC</div>
+    <div>
+      <h1 style="margin:0">Forgecraft</h1>
+      <div style="font-size:12px;color:var(--muted)">Özel Forge Sunucusu</div>
+    </div>
   </div>
+  <nav>
+    <a href="#durum">Durum</a>
+    <a href="#vip">VIP</a>
+    <a href="#forum">Forum</a>
+  </nav>
+</header>
 
-  <script>
-    async function fetchOnlinePlayers() {
-      try {
-        const res = await fetch('https://api.mcsrvstat.us/2/forgecraft-srv.aternos.me');
-        const data = await res.json();
-        if(data.online){
-          document.getElementById('onlinePlayers').textContent = data.players.online;
-        } else {
-          document.getElementById('onlinePlayers').textContent = 'Sunucu kapalı';
-        }
-      } catch(err) {
-        document.getElementById('onlinePlayers').textContent = 'Hata oluştu';
-        console.error(err);
-      }
+<main>
+  <section class="hero" id="durum">
+    <div class="hero-left">
+      <span class="eyebrow">SUNUCU</span>
+      <h2 class="title">Forgecraft — Modlu Minecraft deneyimi<br><span style="color:var(--accent)">Hemen bağlan, macera başlasın.</span></h2>
+      <p class="lead">Sunucumuz mod paketi, özel etkinlikler ve sürekli aktif topluluk ile hizmette. Aşağıdaki karttan anlık oyuncu durumunu takip edebilirsin — kayıt yok, giriş sadece Minecraft ile.</p>
+
+      <div class="cta-row">
+        <a class="btn" id="playBtn" href="#" onclick="copyIP()">Oyna (Kopyala IP)</a>
+        <a class="btn secondary tiny" id="vipBtn" href="https://vip.ornekserver.com" target="_blank" rel="noopener">VIP Satın Al</a>
+        <a class="btn secondary tiny" id="forumBtn" href="https://forum.ornekserver.com" target="_blank" rel="noopener">Forum</a>
+      </div>
+    </div>
+
+    <aside class="card" aria-labelledby="serverStatus">
+      <div class="server-title">
+        <div style="display:flex;flex-direction:column">
+          <div style="font-size:13px;color:var(--muted);font-weight:700">Sunucu</div>
+          <div style="font-weight:800;font-size:16px" id="serverName">forgecraft-srv.aternos.me</div>
+          <div class="server-ip" id="ipText">play: forgecraft-srv.aternos.me</div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <div id="statusCard" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div>
+            <div class="status-big" id="onlinePlayers">--</div>
+            <div class="status-sub" id="statusSub">Durum bilinmiyor</div>
+          </div>
+          <div style="min-width:120px;text-align:center">
+            <div class="pill" id="versionPill">Versiyon: --</div>
+            <div style="height:10px"></div>
+            <div class="pill" id="maxPill">Max: --</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta-row" style="margin-top:14px">
+        <div class="pill" id="uptimePill">Son kontrol: --</div>
+        <div class="pill" id="playersPill">Oyuncular: --</div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="features" style="padding-top:8px">
+    <div class="feature">
+      <h3>Hızlı Bağlantı</h3>
+      <p>Sunucu IP'si direkt olarak Minecraft'ta bağlanılabilir. Sunucu anlık durumunu buradan takip et.</p>
+    </div>
+    <div class="feature">
+      <h3>VIP ile Özel Avantaj</h3>
+      <p>VIP paketleri mağaza linkinde. Özel yetenekler ve ayrı oyun içi ayrıcalıklar sunulur.</p>
+    </div>
+    <div class="feature">
+      <h3>Forum & Duyurular</h3>
+      <p>Tüm etkinlikler, güncellemeler ve oyuncu bildirimleri forumda yayınlanır.</p>
+    </div>
+    <div class="feature">
+      <h3>Güvenli & Ücretsiz</h3>
+      <p>Kayıt gerekmiyor. Sadece Minecraft ile bağlan — sunucumuz ücretsiz olarak hizmet verir.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="small">© <strong>Forgecraft</strong> — Hazır site. IP: <span id="ipFooter">forgecraft-srv.aternos.me</span></div>
+  <div class="small">Son güncelleme: <span id="lastUpdate">--</span></div>
+</footer>
+
+<script>
+/* ---------- CONFIG ---------- */
+// Değiştir: kendi sunucu host adın. (zaten senin verdiğin host var)
+const SERVER_HOST = 'forgecraft-srv.aternos.me';
+// Kaç ms'de bir güncellensin (10000 = 10 saniye)
+const UPDATE_INTERVAL = 10000;
+/* ---------------------------- */
+
+const onlineEl = document.getElementById('onlinePlayers');
+const statusSub = document.getElementById('statusSub');
+const versionPill = document.getElementById('versionPill');
+const maxPill = document.getElementById('maxPill');
+const playersPill = document.getElementById('playersPill');
+const lastUpdate = document.getElementById('lastUpdate');
+const statusCard = document.getElementById('statusCard');
+const ipFooter = document.getElementById('ipFooter');
+const serverName = document.getElementById('serverName');
+const ipText = document.getElementById('ipText');
+
+ipFooter.textContent = SERVER_HOST;
+serverName.textContent = SERVER_HOST;
+ipText.textContent = 'play: ' + SERVER_HOST;
+
+let currentNumber = 0;
+
+// animasyonlu sayı artışı
+function animateNumber(el, start, end, duration=900){
+  const frameRate = 60;
+  const totalFrames = Math.round((duration/1000) * frameRate);
+  let frame = 0;
+  const diff = end - start;
+  const step = () => {
+    frame++;
+    const progress = frame / totalFrames;
+    // yumuşak easeOutQuad
+    const eased = 1 - (1 - progress) * (1 - progress);
+    const value = Math.floor(start + diff * eased);
+    el.textContent = value;
+    if(frame < totalFrames) requestAnimationFrame(step);
+  };
+  step();
+}
+
+// küçük yardımcı: tarih formatı
+function nowStr(){
+  const d = new Date();
+  return d.toLocaleString('tr-TR');
+}
+
+// API çağrısı: mcsrvstat.us
+async function fetchStatus(){
+  const url = `https://api.mcsrvstat.us/2/${SERVER_HOST}`;
+  try{
+    const res = await fetch(url, {cache: "no-store"});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    const wasOnline = data && data.online === true;
+
+    // oyuncu sayısı
+    const newCount = (wasOnline && data.players && data.players.online) ? data.players.online : 0;
+    animateNumber(onlineEl, currentNumber, newCount);
+    currentNumber = newCount;
+
+    // version, max
+    versionPill.textContent = 'Versiyon: ' + (data.version || '—');
+    maxPill.textContent = 'Max: ' + ((data.players && data.players.max) ? data.players.max : '—');
+
+    // players list summary
+    playersPill.textContent = wasOnline ? `Çevrimiçi: ${newCount}` : 'Sunucu kapalı';
+
+    // status text
+    if(wasOnline){
+      statusSub.textContent = 'Sunucu açık';
+      onlineEl.classList.add('onlinePulse');
+    } else {
+      statusSub.textContent = 'Sunucu kapalı veya erişilemiyor';
+      onlineEl.classList.remove('onlinePulse');
+      // gösterimi 0 yap
     }
-    fetchOnlinePlayers();
-    setInterval(fetchOnlinePlayers, 10000);
-  </script>
+
+    lastUpdate.textContent = nowStr();
+  }catch(err){
+    console.error('API hata', err);
+    statusSub.textContent = 'API hatası veya ağ sorunu';
+    onlineEl.classList.remove('onlinePulse');
+    lastUpdate.textContent = nowStr();
+  }
+}
+
+// Başlangıç ve periyodik güncelleme
+fetchStatus();
+setInterval(fetchStatus, UPDATE_INTERVAL);
+
+// kopyala IP fonksiyonu
+function copyIP(){
+  navigator.clipboard?.writeText(SERVER_HOST).then(()=> {
+    const old = document.getElementById('playBtn').textContent;
+    document.getElementById('playBtn').textContent = 'IP kopyalandı ✓';
+    setTimeout(()=> document.getElementById('playBtn').textContent = old, 1800);
+  }).catch(()=> {
+    alert('IP kopyalama desteklenmiyor. Manuel kopyala: ' + SERVER_HOST);
+  });
+}
+
+/* Not: Aternos veya bazı host'lar query/protocol bilgilerini kapatmış olabilir.
+   Bu durumda API "offline" veya kısıtlı bilgi dönebilir. Eğer eksik veri alıyorsan
+   özel server-side sorgu (RCON/Query) ile daha güvenilir sonuç almak gerekir. */
+</script>
 </body>
 </html>
