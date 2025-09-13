@@ -1,207 +1,315 @@
-<!-- VIP ve Forum işlevselliği eklenmiş hali -->
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Forgecraft — Sunucu Durumu</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#0f1724;--bg2:#071028;--accent:#7afcff;--accent2:#ffd166;--card:#0d1220;--muted:#94a3b8;--glass: rgba(255,255,255,0.03);}
+:root{
+  --bg1:#0f1724;
+  --bg2:#071028;
+  --accent:#7afcff;
+  --accent2:#ffd166;
+  --card:#0d1220;
+  --muted:#94a3b8;
+  --glass: rgba(255,255,255,0.03);
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background: radial-gradient(1200px 800px at 10% 10%, rgba(122,252,255,0.03), transparent 6%), radial-gradient(900px 600px at 90% 90%, rgba(255,209,102,0.02), transparent 8%), linear-gradient(180deg,var(--bg1),var(--bg2)); color:#e6eef8; min-height:100vh;}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background: radial-gradient(1200px 800px at 10% 10%, rgba(122,252,255,0.03), transparent 6%),
+              radial-gradient(900px 600px at 90% 90%, rgba(255,209,102,0.02), transparent 8%),
+              linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:#e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+}
+
 /* NAV */
-header{display:flex;align-items:center;justify-content:space-between;padding:22px 36px;backdrop-filter: blur(6px);}
-.brand{display:flex;gap:14px;align-items:center;}
-.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#021226;font-size:18px;box-shadow:0 6px 18px rgba(0,0,0,0.6);}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px 36px;
+  backdrop-filter: blur(6px);
+}
+.brand{ display:flex;gap:14px;align-items:center; }
+.logo{ width:48px;height:48px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#021226;font-size:18px;box-shadow:0 6px 18px rgba(0,0,0,0.6);
+}
 .brand h1{margin:0;font-size:18px;letter-spacing:0.4px}
-nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600;cursor:pointer;}
-nav a:hover{color:var(--accent);}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600;cursor:pointer}
+nav a:hover{color:var(--accent)}
+
 /* HERO */
-.hero{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center;padding:40px 6vw;}
+.hero{ display:grid; grid-template-columns: 1fr 420px; gap:40px; align-items:center; padding:40px 6vw; }
 .hero-left{max-width:780px}
 .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--accent);font-weight:700;font-size:12px;margin-bottom:16px}
 .title{font-size:48px;line-height:1.02;margin:6px 0 16px}
 .lead{color:var(--muted);font-size:16px;margin-bottom:22px}
 .cta-row{display:flex;gap:14px;margin-top:12px}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,#0ea5a7,#7afcff);color:#021226;font-weight:800;border:none;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,0.5), inset 0 -2px 0 rgba(0,0,0,0.06); text-decoration:none;}
-.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:700;}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;
+  background:linear-gradient(90deg,#0ea5a7,#7afcff);color:#021226;font-weight:800;border:none;cursor:pointer;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5), inset 0 -2px 0 rgba(0,0,0,0.06);
+  text-decoration:none;
+}
+.btn.secondary{
+  background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:700;
+}
 .tiny{font-size:13px;padding:8px 12px;border-radius:10px}
+
 /* RIGHT CARD */
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03);}
-.server-title{display:flex;align-items:center;gap:12px}
-.ping-dot{width:12px;height:12px;border-radius:50%;}
-.server-ip{color:var(--muted);font-weight:600;margin-top:6px}
-.status-big{font-size:54px;font-weight:900;margin:10px 0;color:var(--accent2);text-shadow:0 6px 20px rgba(0,0,0,0.6)}
-.status-sub{color:var(--muted);font-weight:600}
-.meta-row{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:16px;padding:18px;box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+  border:1px solid rgba(255,255,255,0.03);
+}
+.server-title{display:flex;align-items:center;gap:12px;}
+.server-ip{color:var(--muted);font-weight:600;margin-top:6px;}
+.status-big{font-size:54px;font-weight:900;margin:10px 0;color:var(--accent2);text-shadow:0 6px 20px rgba(0,0,0,0.6);}
+.status-sub{color:var(--muted);font-weight:600;}
+.meta-row{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
 .pill{background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:700;font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+
 /* CARDS SECTION */
-.features{padding:36px 6vw;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-.feature{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03); transition:transform .35s ease, box-shadow .35s ease;}
+.features {padding:36px 6vw;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.feature{ background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03); transition:transform .35s ease, box-shadow .35s ease; }
 .feature:hover{transform:translateY(-8px);box-shadow:0 18px 45px rgba(0,0,0,0.5)}
 .feature h3{margin:0 0 8px;font-size:18px}
 .feature p{margin:0;color:var(--muted);font-size:14px}
+
+/* VIP Section */
+#vipSection {display:none; padding:36px 6vw;}
+
 /* FOOTER */
 footer{padding:28px 6vw;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
 .small{font-size:12px;color:rgba(230,238,248,0.6)}
-/* VIP Modal */
-#vipSection{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,36,0.95);backdrop-filter:blur(4px);z-index:1000;overflow:auto;padding:50px 20px;}
-.vipContent{max-width:700px;margin:0 auto;background:var(--card);border-radius:16px;padding:24px;}
-.vipContent h2{text-align:center;margin-bottom:24px;}
-.vipContent .feature input{width:100%;margin:10px 0;padding:8px;border-radius:8px;border:1px solid #444;outline:none;text-align:center;}
-.vipContent .feature .btn{width:100%;}
+
 /* Responsive */
-@media (max-width:980px){.hero{grid-template-columns:1fr;gap:20px;padding:28px 4vw}.title{font-size:34px}.status-big{font-size:46px}}
-@media (max-width:520px){header{padding:14px 18px}.title{font-size:28px}.server-title{flex-direction:column;align-items:flex-start} nav a{display:none}}
-.onlinePulse{animation:pulse 2s infinite;box-shadow:0 0 28px rgba(255,209,102,0.08), inset 0 -4px 12px rgba(255,209,102,0.02);}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:20px;padding:28px 4vw}
+  .title{font-size:34px}
+  .status-big{font-size:46px}
+}
+@media (max-width:520px){
+  header{padding:14px 18px}
+  .title{font-size:28px}
+  .server-title{flex-direction:column;align-items:flex-start}
+  nav a{display:none}
+}
+
+/* pulse */
+.onlinePulse{ animation: pulse 2s infinite; box-shadow:0 0 28px rgba(255,209,102,0.08), inset 0 -4px 12px rgba(255,209,102,0.02); }
+@keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
 </style>
 </head>
 <body>
+
 <header>
-<div class="brand">
-<div class="logo">FC</div>
-<div>
-<h1 style="margin:0">Forgecraft</h1>
-<div style="font-size:12px;color:var(--muted)">Özel Forge Sunucusu</div>
-</div>
-</div>
-<nav>
-<a href="#durum">Durum</a>
-<a onclick="showVip()">VIP</a>
-<a href="https://forum.ornekserver.com" target="_blank">Forum</a>
-</nav>
+  <div class="brand">
+    <div class="logo">FC</div>
+    <div>
+      <h1 style="margin:0">Forgecraft</h1>
+      <div style="font-size:12px;color:var(--muted)">Özel Forge Sunucusu</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#durum">Durum</a>
+    <a onclick="showVip()">VIP</a>
+    <a href="https://forum.ornekserver.com" target="_blank">Forum</a>
+  </nav>
 </header>
 
 <main>
 <section class="hero" id="durum">
-<div class="hero-left">
-<span class="eyebrow">SUNUCU</span>
-<h2 class="title">Forgecraft — Modlu Minecraft deneyimi<br><span style="color:var(--accent)">Hemen bağlan, macera başlasın.</span></h2>
-<p class="lead">Sunucumuz mod paketi, özel etkinlikler ve sürekli aktif topluluk ile hizmette. Aşağıdaki karttan anlık oyuncu durumunu takip edebilirsin — kayıt yok, giriş sadece Minecraft ile.</p>
-<div class="cta-row">
-<a class="btn" id="playBtn" href="#" onclick="copyIP()">Oyna (Kopyala IP)</a>
-<a class="btn secondary tiny" onclick="showVip()">VIP Satın Al</a>
-<a class="btn secondary tiny" href="https://forum.ornekserver.com" target="_blank">Forum</a>
-</div>
-</div>
-<aside class="card" aria-labelledby="serverStatus">
-<div class="server-title">
-<div style="display:flex;flex-direction:column">
-<div style="font-size:13px;color:var(--muted);font-weight:700">Sunucu</div>
-<div style="font-weight:800;font-size:16px" id="serverName">forgecraft-srv.aternos.me</div>
-<div class="server-ip" id="ipText">play: forgecraft-srv.aternos.me</div>
-</div>
-</div>
-<div style="margin-top:18px">
-<div id="statusCard" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-<div>
-<div class="status-big onlinePulse" id="onlinePlayers">0</div>
-<div class="status-sub" id="statusSub">Sunucu açık</div>
-</div>
-<div style="min-width:120px;text-align:center">
-<div class="pill" id="versionPill">Versiyon: ● Offline</div>
-<div style="height:10px"></div>
-<div class="pill" id="maxPill">Max: 20</div>
-</div>
-</div>
-</div>
-<div class="meta-row" style="margin-top:14px">
-<div class="pill" id="uptimePill">Son kontrol: --</div>
-<div class="pill" id="playersPill">Çevrimiçi: 0</div>
-</div>
-</aside>
+  <div class="hero-left">
+    <span class="eyebrow">SUNUCU</span>
+    <h2 class="title">Forgecraft — Modlu Minecraft deneyimi<br><span style="color:var(--accent)">Hemen bağlan, macera başlasın.</span></h2>
+    <p class="lead">Sunucumuz mod paketi, özel etkinlikler ve sürekli aktif topluluk ile hizmette. Aşağıdaki karttan anlık oyuncu durumunu takip edebilirsin — kayıt yok, giriş sadece Minecraft ile.</p>
+    <div class="cta-row">
+      <a class="btn" id="playBtn" href="#" onclick="copyIP()">Oyna (Kopyala IP)</a>
+      <a class="btn secondary tiny" onclick="showVip()">VIP Satın Al</a>
+      <a class="btn secondary tiny" href="https://forum.ornekserver.com" target="_blank">Forum</a>
+    </div>
+  </div>
+  <aside class="card" aria-labelledby="serverStatus">
+    <div class="server-title">
+      <div style="display:flex;flex-direction:column">
+        <div style="font-size:13px;color:var(--muted);font-weight:700">Sunucu</div>
+        <div style="font-weight:800;font-size:16px" id="serverName">forgecraft-srv.aternos.me</div>
+        <div class="server-ip" id="ipText">play: forgecraft-srv.aternos.me</div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+      <div id="statusCard" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <div class="status-big onlinePulse" id="onlinePlayers">0</div>
+          <div class="status-sub" id="statusSub">Sunucu açık</div>
+        </div>
+        <div style="min-width:120px;text-align:center">
+          <div class="pill" id="versionPill">Versiyon: ● Offline</div>
+          <div style="height:10px"></div>
+          <div class="pill" id="maxPill">Max: 20</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meta-row" style="margin-top:14px">
+      <div class="pill" id="uptimePill">Son kontrol: --</div>
+      <div class="pill" id="playersPill">Çevrimiçi: 0</div>
+    </div>
+  </aside>
 </section>
 
-<!-- VIP Modal -->
-<div id="vipSection">
-<div class="vipContent">
-<h2>Forgecraft VIP Paketleri</h2>
-<div class="features">
-<div class="feature">
-<h3>VIP Bronze</h3>
-<p>Haftalık kit, VIP etiketi.</p>
-<input type="text" placeholder="Minecraft kullanıcı adın" id="bronzeUser">
-<button class="btn" onclick="buyVip('bronze','bronzeUser')">Al (Bedava)</button>
-</div>
-<div class="feature">
-<h3>VIP Silver</h3>
-<p>Bronze + market indirimleri.</p>
-<input type="text" placeholder="Minecraft kullanıcı adın" id="silverUser">
-<button class="btn" onclick="buyVip('silver','silverUser')">Satın Al</button>
-</div>
-<div class="feature">
-<h3>VIP Gold</h3>
-<p>Silver + kozmetik efektler.</p>
-<input type="text" placeholder="Minecraft kullanıcı adın" id="goldUser">
-<button class="btn" onclick="buyVip('gold','goldUser')">Satın Al</button>
-</div>
-<div class="feature">
-<h3>VIP Diamond</h3>
-<p>Tüm avantajlar + özel kanal.</p>
-<input type="text" placeholder="Minecraft kullanıcı adın" id="diamondUser">
-<button class="btn" onclick="buyVip('diamond','diamondUser')">Satın Al</button>
-</div>
-</div>
-</div>
-</div>
+<!-- VIP Bölümü -->
+<section id="vipSection">
+  <h2 style="text-align:center;">Forgecraft VIP Paketleri</h2>
+  <div class="features">
+    <div class="feature">
+      <h3>VIP Bronze</h3>
+      <p>Haftalık kit, VIP etiketi.</p>
+      <input type="text" placeholder="Minecraft kullanıcı adın" id="bronzeUser">
+      <button class="btn" onclick="buyVip('bronze','bronzeUser')">Al (Bedava Giriş)</button>
+    </div>
+    <div class="feature">
+      <h3>VIP Silver</h3>
+      <p>Bronze + market indirimleri.</p>
+      <input type="text" placeholder="Minecraft kullanıcı adın" id="silverUser">
+      <button class="btn" onclick="buyVip('silver','silverUser')">Satın Al</button>
+    </div>
+    <div class="feature">
+      <h3>VIP Gold</h3>
+      <p>Silver + kozmetik efektler.</p>
+      <input type="text" placeholder="Minecraft kullanıcı adın" id="goldUser">
+      <button class="btn" onclick="buyVip('gold','goldUser')">Satın Al</button>
+    </div>
+    <div class="feature">
+      <h3>VIP Diamond</h3>
+      <p>Tüm avantajlar + özel kanal.</p>
+      <input type="text" placeholder="Minecraft kullanıcı adın" id="diamondUser">
+      <button class="btn" onclick="buyVip('diamond','diamondUser')">Satın Al</button>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <footer>
-<div class="small">© <strong>Forgecraft</strong> — Hazır site. IP: <span id="ipFooter">forgecraft-srv.aternos.me</span></div>
-<div class="small">Son güncelleme: <span id="lastUpdate">12.08.2025 13:30:19</span></div>
+  <div class="small">© <strong>Forgecraft</strong> — Hazır site. IP: <span id="ipFooter">forgecraft-srv.aternos.me</span></div>
+  <div class="small">Son güncelleme: <span id="lastUpdate">--</span></div>
 </footer>
 
 <script>
-const SERVER_HOST='forgecraft-srv.aternos.me';
-const UPDATE_INTERVAL=10000;
-const onlineEl=document.getElementById('onlinePlayers');
-const statusSub=document.getElementById('statusSub');
-const versionPill=document.getElementById('versionPill');
-const maxPill=document.getElementById('maxPill');
-const playersPill=document.getElementById('playersPill');
-const lastUpdate=document.getElementById('lastUpdate');
-const ipFooter=document.getElementById('ipFooter');
-const serverName=document.getElementById('serverName');
-const ipText=document.getElementById('ipText');
-ipFooter.textContent=SERVER_HOST;
-serverName.textContent=SERVER_HOST;
-ipText.textContent='play: '+SERVER_HOST;
-let currentNumber=0;
-
-function animateNumber(el,start,end,duration=900){const frameRate=60;const totalFrames=Math.round((duration/1000)*frameRate);let frame=0;const diff=end-start;const step=()=>{frame++;const progress=frame/totalFrames;const eased=1-(1-progress)*(1-progress);const value=Math.floor(start+diff*eased);el.textContent=value;if(frame<totalFrames)requestAnimationFrame(step);};step();}
-function nowStr(){const d=new Date();return d.toLocaleString('tr-TR');}
-
-async function fetchStatus(){
-const url=`https://api.mcsrvstat.us/2/${SERVER_HOST}`;
-try{
-const res=await fetch(url,{cache:"no-store"});
-if(!res.ok)throw new Error('HTTP '+res.status);
-const data=await res.json();
-const wasOnline=data&&data.online===true;
-const newCount=(wasOnline&&data.players&&data.players.online)?data.players.online:0;
-animateNumber(onlineEl,currentNumber,newCount);
-currentNumber=newCount;
-versionPill.textContent='Versiyon: '+(data.version||'—');
-maxPill.textContent='Max: '+((data.players&&data.players.max)?data.players.max:'—');
-playersPill.textContent=wasOnline?`Çevrimiçi: ${newCount}`:'Sunucu kapalı';
-if(wasOnline){statusSub.textContent='Sunucu açık';onlineEl.classList.add('onlinePulse');}else{statusSub.textContent='Sunucu kapalı veya erişilemiyor';onlineEl.classList.remove('onlinePulse');}
-lastUpdate.textContent=nowStr();
-}catch(err){console.error('API hata',err);statusSub.textContent='API hatası veya ağ sorunu';onlineEl.classList.remove('onlinePulse');lastUpdate.textContent=nowStr();}
+// VIP açma
+function showVip(){
+  const vip = document.getElementById("vipSection");
+  vip.style.display = "block";
+  window.scrollTo(0, vip.offsetTop);
 }
+
+// VIP alımı
+function buyVip(type, inputId){
+  const username = document.getElementById(inputId).value.trim();
+  if(!username){
+    alert("Lütfen kullanıcı adını gir!");
+    return;
+  }
+  fetch("http://127.0.0.1:5000/vip", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ vip: type, user: username })
+  })
+  .then(r => r.text())
+  .then(msg => alert("VIP işlemi: " + msg))
+  .catch(err => alert("Hata: " + err));
+}
+
+// ---------- CONFIG ----------
+const SERVER_HOST = 'forgecraft-srv.aternos.me';
+const UPDATE_INTERVAL = 10000;
+
+const onlineEl = document.getElementById('onlinePlayers');
+const statusSub = document.getElementById('statusSub');
+const versionPill = document.getElementById('versionPill');
+const maxPill = document.getElementById('maxPill');
+const playersPill = document.getElementById('playersPill');
+const lastUpdate = document.getElementById('lastUpdate');
+
+let currentNumber = 0;
+
+// animasyonlu sayı
+function animateNumber(el, start, end, duration=900){
+  const frameRate = 60;
+  const totalFrames = Math.round((duration/1000) * frameRate);
+  let frame = 0;
+  const diff = end - start;
+  const step = () => {
+    frame++;
+    const progress = frame / totalFrames;
+    const eased = 1 - (1 - progress) * (1 - progress);
+    const value = Math.floor(start + diff * eased);
+    el.textContent = value;
+    if(frame < totalFrames) requestAnimationFrame(step);
+  };
+  step();
+}
+
+function nowStr(){ const d = new Date(); return d.toLocaleString('tr-TR'); }
+
+// MineTools API ile durum alma
+async function fetchStatus(){
+  try{
+    const res = await fetch(`https://api.minetools.eu/query/${SERVER_HOST}/25565`);
+    const data = await res.json();
+    
+    if(data.error){
+      throw new Error(data.error);
+    }
+
+    const newCount = data.players?.online || 0;
+    animateNumber(onlineEl, currentNumber, newCount);
+    currentNumber = newCount;
+
+    versionPill.textContent = 'Versiyon: ' + (data.version?.name || '—');
+    maxPill.textContent = 'Max: ' + (data.players?.max || '—');
+    playersPill.textContent = `Çevrimiçi: ${newCount}`;
+
+    statusSub.textContent = 'Sunucu açık';
+    onlineEl.classList.add('onlinePulse');
+    lastUpdate.textContent = nowStr();
+
+  }catch(err){
+    console.error('API Hatası:', err);
+    statusSub.textContent = 'Sunucu kapalı veya API hatası';
+    onlineEl.classList.remove('onlinePulse');
+    onlineEl.textContent = 0;
+    lastUpdate.textContent = nowStr();
+  }
+}
+
+// Başlangıç ve periyodik güncelleme
 fetchStatus();
-setInterval(fetchStatus,UPDATE_INTERVAL);
+setInterval(fetchStatus, UPDATE_INTERVAL);
 
-function copyIP(){navigator.clipboard?.writeText(SERVER_HOST).then(()=>{const old=document.getElementById('playBtn').textContent;document.getElementById('playBtn').textContent='IP kopyalandı ✓';setTimeout(()=>document.getElementById('playBtn').textContent=old,1800);}).catch(()=>{alert('IP kopyalama desteklenmiyor. Manuel kopyala: '+SERVER_HOST);});}
-
-// VIP Modal
-function showVip(){const vipDiv=document.getElementById('vipSection');vipDiv.style.display=(vipDiv.style.display==='block')?'none':'block';window.scrollTo(0,vipDiv.offsetTop);}
-function buyVip(type,inputId){
-const username=document.getElementById(inputId).value.trim();
-if(!username){alert("Lütfen kullanıcı adını gir!");return;}
-fetch("http://127.0.0.1:5000/vip",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({vip:type,user:username})})
-.then(r=>r.text()).then(msg=>alert("VIP işlemi: "+msg)).catch(err=>alert("Hata: "+err));
+// IP kopyalama fonksiyonu
+function copyIP(){
+  navigator.clipboard?.writeText(SERVER_HOST).then(()=> {
+    const old = document.getElementById('playBtn').textContent;
+    document.getElementById('playBtn').textContent = 'IP kopyalandı ✓';
+    setTimeout(()=> document.getElementById('playBtn').textContent = old, 1800);
+  }).catch(()=> {
+    alert('IP kopyalama desteklenmiyor. Manuel kopyala: ' + SERVER_HOST);
+  });
 }
 </script>
+
 </body>
 </html>
